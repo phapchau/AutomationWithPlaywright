@@ -1,0 +1,17 @@
+{
+  "validUsers": [
+    {
+      "username": "admin",
+      "password": "123456@Aa",
+      "role": "Admin",
+      "description": "Tài khoản quản trị"
+    }
+  ],
+  "invalidUsers": [
+    {
+      "username": "invalid",
+      "password": "wrongpassword",
+      "description": "Tài khoản không tồn tại"
+    }
+  ]
+}

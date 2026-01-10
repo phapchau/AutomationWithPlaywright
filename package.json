@@ -1,0 +1,29 @@
+{
+  "name": "automation-test-nentang",
+  "version": "1.0.0",
+  "description": "Automation Testing Framework with Playwright and Allure Report",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:dktw": "playwright test --project=DKTW",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report:generate": "allure generate allure-results -o allure-report --clean",
+    "report:open": "allure open allure-report",
+    "report:serve": "allure serve allure-results"
+  },
+  "keywords": [
+    "playwright",
+    "automation",
+    "testing",
+    "allure"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "allure-commandline": "^2.30.0",
+    "allure-playwright": "^2.15.1",
+    "typescript": "^5.7.2"
+  }
+}
