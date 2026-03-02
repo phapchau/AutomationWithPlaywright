@@ -55,12 +55,33 @@ export class LoginPage {
     await this.passwordInput.fill(password);
     
     // Kiểm tra và xử lý captcha nếu có
-    if (captchaSolver) {
-      const hasCaptcha = await captchaSolver.isCaptchaRequired(this.page, 'input[name="captcha"], input[placeholder*="mã"]');
-      if (hasCaptcha) {
-        await captchaSolver.fillCaptcha(this.page, 'input[name="captcha"], input[placeholder*="mã"]');
-      }
-    }
+    // if (captchaSolver) {
+    //   const hasCaptcha = await captchaSolver.isCaptchaRequired(this.page, 'input[name="captcha"], input[placeholder*="mã"]');
+    //   if (hasCaptcha) {
+    //     await captchaSolver.fillCaptcha(this.page, 'input[name="captcha"], input[placeholder*="mã"]');
+    //   }
+    // }
+
+
+
+
+  // ✅ CAPTCHA THỰC TẾ (Material UI)
+  const captchaLocator = this.page.locator('input[placeholder*="Mã xác nhận"]');
+
+  await captchaLocator.waitFor({
+    state: 'visible',
+    timeout: 10000,
+  });
+
+  console.log('🧩 Điền mã xác nhận captcha = 1');
+  await captchaLocator.fill('1');
+
+  console.log(
+    '✅ Captcha value:',
+    await captchaLocator.inputValue()
+  );
+
+
   }
 
   /**
@@ -110,6 +131,9 @@ export class LoginPage {
     await expect(this.errorMessage).not.toBeVisible();
   }
 
+  
+
+
   /**
    * Kiểm tra đăng nhập thất bại
    */
@@ -124,6 +148,10 @@ export class LoginPage {
     await this.errorMessage.waitFor({ state: 'visible', timeout: 5000 });
     return await this.errorMessage.textContent() || '';
   }
+
+
+
+
 
   /**
    * Kiểm tra field có hiển thị không
