@@ -120,6 +120,7 @@ test('TC701  Search theo Họ tên (input chung)', async ({ page }) => {
     await pageObj.verifySearchInputEmpty();
   });
 
+  
   // =====================================================
   test('TC704  Search ký tự đặc biệt → No data', async ({ page }) => {
     const pageObj = new DanhSachHenTaiKhamPage(page);
