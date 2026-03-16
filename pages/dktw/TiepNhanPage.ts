@@ -289,6 +289,22 @@ async fillRequiredFields(options?: { sdt?: string; hoTen?: string; }) {
   if (options?.noiCap) {
     await this.fillOptionalTextbox(/Nơi cấp/i, options.noiCap);
   }
+// Ngày cấp
+// if (options?.ngayCap) {
+//   const ngayCap = this.page.locator(
+//     'input[data-path="benhnhan.benhnhanCmndNgaycap"]'
+//   );
+//   await ngayCap.fill(options.ngayCap);
+//   await ngayCap.press('Enter'); // cần cho Mantine DateInput
+// }
+
+// // Nơi cấp
+// if (options?.noiCap) {
+//   const noiCap = this.page.locator(
+//     'input[data-path="benhnhan.benhnhanCmndNoicap"]'
+//   );
+//   await noiCap.fill(options.noiCap);
+// }
 
 }
   // ===============================
@@ -493,6 +509,8 @@ async traCuuTheoCCCD(cccd: string) {
 async verifyTraCuuThanhCong() {
   await expect(this.hoTenInput).not.toHaveValue('');
 }
+
+
 
 
 }//

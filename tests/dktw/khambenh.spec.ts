@@ -41,7 +41,7 @@ test.describe('DKTW - Khám bệnh', () => {
 
   test('TC400  Kiểm tra nghề nghiệp đã được lưu trong hồ sơ khám bệnh (theo Mã BN)', async ({ page }) => {
   const khamBenhPage = new KhamBenhPage(page);
-  const MA_BN = '2602000023';
+  const MA_BN = '2603000001';
 
   // 1️⃣ Vào trang Khám bệnh
   await khamBenhPage.goto();
@@ -61,7 +61,7 @@ test.describe('DKTW - Khám bệnh', () => {
 
   test('TC401  Kiểm tra HỌ TÊN được hiển thị trong hồ sơ khám bệnh', async ({ page }) => {
   const khamBenhPage = new KhamBenhPage(page);
-  const MA_BN = '2602000023';
+  const MA_BN = '2603000001';
 
   // 1️⃣ Vào trang Khám bệnh
   await khamBenhPage.goto();
@@ -119,7 +119,7 @@ test('TC402  Danh sách chờ khám sắp xếp tăng dần theo Mã BN', async 
 
   test('TC403  Kiểm tra TUỔI hiển thị đúng định dạng trong hồ sơ khám bệnh', async ({ page }) => {
   const khamBenhPage = new KhamBenhPage(page);
-  const MA_BN = '2602000020';
+  const MA_BN = '2603000001';
 
   // 1️⃣ Vào trang Khám bệnh
   await khamBenhPage.goto();
@@ -141,7 +141,7 @@ test('TC402  Danh sách chờ khám sắp xếp tăng dần theo Mã BN', async 
 
  test('TC404  Search theo Mã BN (input chung  cả Chờ khám & Đã khám)', async ({ page }) => {
     const khamBenhPage = new KhamBenhPage(page);
-    const MA_BN = '2602000023'; // ✅ mã BN có tồn tại
+    const MA_BN = '2603000001'; // ✅ mã BN có tồn tại
 
     await khamBenhPage.goto();
 
@@ -157,7 +157,7 @@ test('TC402  Danh sách chờ khám sắp xếp tăng dần theo Mã BN', async 
 
   test('TC405  Search theo SĐT (input chung cả Chờ khám & Đã khám)', async ({ page }) => {
     const khamBenhPage = new KhamBenhPage(page);
-    const SDT = '090901234567'; // ✅ SĐT có tồn tại
+    const SDT = '0901234567'; // ✅ SĐT có tồn tại
 
     await khamBenhPage.goto();
 
@@ -174,7 +174,7 @@ test('TC402  Danh sách chờ khám sắp xếp tăng dần theo Mã BN', async 
 
 test('TC406  Search theo CCCD (input chung  cả Chờ khám & Đã khám)', async ({ page }) => {
     const khamBenhPage = new KhamBenhPage(page);
-    const CCCD = ' 091772009256060'; // ✅ CCCD có tồn tại
+    const CCCD = '089204018469'; // ✅ CCCD có tồn tại
 
     await khamBenhPage.goto();
 

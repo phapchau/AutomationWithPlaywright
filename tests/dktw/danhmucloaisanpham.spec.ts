@@ -177,56 +177,56 @@ test('TC607 - Không nhập tên loại sản phẩm', async ({ page }) => {
 
 
 
-// test('TC608 - Tìm kiếm không tồn tại', async ({ page }) => {
-//   const dm = new DanhMucLoaiSanPhamPage(page);
-//   await dm.goto();
+test('TC608 - Tìm kiếm không tồn tại', async ({ page }) => {
+  const dm = new DanhMucLoaiSanPhamPage(page);
+  await dm.goto();
 
-//   await dm.search('Không tồn tại xyz');
+  await dm.search('Không tồn tại xyz');
 
-//   await expect(
-//     page.getByText(/không tìm thấy kết quả/i)
-//   ).toBeVisible();
-// });
-
-
-
-// test('TC609 - Hủy khi thêm loại sản phẩm', async ({ page }) => {
-//   const dm = new DanhMucLoaiSanPhamPage(page);
-//   await dm.goto();
-
-//   await dm.addButton.click();
-//   await expect(dm.modal).toBeVisible();
-
-//   await dm.cancelButton.click();
-//   await expect(dm.modal).toBeHidden();
-// });
+  await expect(
+    page.getByText(/không tìm thấy kết quả/i)
+  ).toBeVisible();
+});
 
 
+
+test('TC609 - Hủy khi thêm loại sản phẩm', async ({ page }) => {
+  const dm = new DanhMucLoaiSanPhamPage(page);
+  await dm.goto();
+
+  await dm.addButton.click();
+  await expect(dm.modal).toBeVisible();
+
+  await dm.cancelButton.click();
+  await expect(dm.modal).toBeHidden();
+});
 
 
 
 
-// test('TC611 - Sửa khi không nhập diễn giải', async ({ page }) => {
-//   const dm = new DanhMucLoaiSanPhamPage(page);
-//   await dm.goto();
 
-//   await dm.search('Thuốc viên');
 
-//   const row = dm.tableRows.first();
-//   await row.locator('button:has(svg.tabler-icon-edit)').click();
+test('TC611 - Sửa khi không nhập diễn giải', async ({ page }) => {
+  const dm = new DanhMucLoaiSanPhamPage(page);
+  await dm.goto();
 
-//   await dm.modal.waitFor({ state: 'visible' });
+  await dm.search('Thuốc viên');
+
+  const row = dm.tableRows.first();
+  await row.locator('button:has(svg.tabler-icon-edit)').click();
+
+  await dm.modal.waitFor({ state: 'visible' });
 
   
 
-//   await dm.modal
-//     .getByRole('button', { name: /cập nhật/i })
-//     .click();
+  await dm.modal
+    .getByRole('button', { name: /cập nhật/i })
+    .click();
 
-//   await expect(
-//     page.getByText(/cannot be null/i)
-//   ).toBeVisible();
-// });
+  await expect(
+    page.getByText(/cannot be null/i)
+  ).toBeVisible();
+});
 
 
 });

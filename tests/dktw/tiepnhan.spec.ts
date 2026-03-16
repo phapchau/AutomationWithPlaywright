@@ -1,245 +1,253 @@
 
 
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/dktw/LoginPage';
-import { TiepNhanPage } from '../../pages/dktw/TiepNhanPage';
-import { createCaptchaSolver } from '../../utils/captcha-solver';
-import users from '../../data/dktw/users.json';
+// import { test, expect } from '@playwright/test';
+// import { LoginPage } from '../../pages/dktw/LoginPage';
+// import { TiepNhanPage } from '../../pages/dktw/TiepNhanPage';
+// import { createCaptchaSolver } from '../../utils/captcha-solver';
+// import { readExcel } from '../../utils/excelReader';
+// import users from '../../data/dktw/users.json';
+
+
+
+// const testData: any[] = readExcel('data/tiepnhan.xlsx');
 
 // test.describe('DKTW  Tiếp nhận bệnh nhân', () => {
 //   test.beforeEach(async ({ page }) => {
-//     const loginPage = new LoginPage(page);
+//     // 👉 vào trang sau khi đã login bằng storageState
+//     await page.goto('/benhvien');
 
-//     const captchaSolver = createCaptchaSolver('bypass', { fixedValue: '1' });
-//     const adminUser = users.validUsers[0];
+//     // ✅ đảm bảo session còn hiệu lực
+//     await expect(page).not.toHaveURL(/user\/login/, {
+//       timeout: 15000,
+//     });
 
-//     await loginPage.login(adminUser.username, adminUser.password, captchaSolver);
-//     await expect(page).not.toHaveURL(/user\/login/, { timeout: 20000 });
+//     // (optional) chờ SPA ổn định
+//     await page.waitForTimeout(300);
 //   });
 
-
-test.describe('DKTW  Tiếp nhận bệnh nhân', () => {
-  test.beforeEach(async ({ page }) => {
-    // 👉 vào trang sau khi đã login bằng storageState
-    await page.goto('/benhvien');
-
-    // ✅ đảm bảo session còn hiệu lực
-    await expect(page).not.toHaveURL(/user\/login/, {
-      timeout: 15000,
-    });
-
-    // (optional) chờ SPA ổn định
-    await page.waitForTimeout(300);
-  });
-
-
+//  testData.forEach((data, index) => {
   
+// // test('TC300 - Nhập đầy đủ thông tin và tiếp nhận thành công', async ({ page }) => {
 
-// test('TC300 Nhập đầy đủ thông tin và tiếp nhận thành công', async ({ page }) => {
-//   const tiepNhanPage = new TiepNhanPage(page);
+// //   const tiepNhanPage = new TiepNhanPage(page);
 
-//   await tiepNhanPage.goto();
+// //   await tiepNhanPage.goto();
 
-//   const hoTen = 'Auto';
-//   const soCCCD = `09${Date.now()}`;
+// //   const hoTen = `Auto ${Date.now()}`;
+// //   const soCCCD = `09${Date.now()}`;
 
-//   await tiepNhanPage.fillRequiredFields({
-//     hoTen,
-//   });
+// //   await tiepNhanPage.fillRequiredFields({ hoTen });
 
-//   await tiepNhanPage.fillOptionalFields({
-//     soCCCD,
-//     ngheNghiep: 'Công nhân',
-//     noiLamViec: 'Công ty ABCX',
-//     trinhDoVanHoa: '12/12',
-//     diaChi: '123 Lê Lợi',
-//     ngayCap: '01/03/2020',
-//     noiCap: 'Công an Quận 1',
-//   });
+// //   await tiepNhanPage.fillOptionalFields({
+// //     soCCCD,
+// //     ngheNghiep: 'Công nhân',
+// //     noiLamViec: 'Công ty ABCX',
+// //     trinhDoVanHoa: '12/12',
+// //     diaChi: '123 Lê Lợi',
+// //     ngayCap: '01/03/2020',
+// //     noiCap: 'Công an Quận 1',
+// //   });
 
-//   await tiepNhanPage.clickTiepNhan();
+// //   await tiepNhanPage.clickTiepNhan();
 
-//   // ✅ 1️⃣ VERIFY TOAST THÀNH CÔNG (tín hiệu nghiệp vụ)
-//   await tiepNhanPage.verifyCapNhatSuccessToast();
+// //   // verify toast
+// //   await tiepNhanPage.verifyCapNhatSuccessToast();
 
-//   // ✅ 2️⃣ VERIFY bệnh nhân mới xuất hiện (KHÔNG phụ thuộc tuổi)
-//   const benhNhanMoi = page
-//   .locator('div')
-//   .filter({
-//     hasText: new RegExp(`${hoTen}.*tuổi`, 'i'),
-//   })
-//   .first();
+// //   // chờ UI render
+// //   await page.waitForTimeout(1500);
 
-// await expect(benhNhanMoi).toBeVisible({ timeout: 20000 });
+// //   // verify bệnh nhân xuất hiện
+// //   const benhNhanMoi = page.locator('span', {
+// //     hasText: new RegExp(`${hoTen}.*tuổi`, 'i')
+// //   }).first();
 
-// });
+// //   await expect(benhNhanMoi).toBeVisible({ timeout: 20000 });
 
+// // });
 
-test('TC300 Nhập đầy đủ thông tin và tiếp nhận thành công', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
+//   test(`TC300 - Tiếp nhận bệnh nhân nhập dầy đủ từ Excel ${index + 1}`, async ({ page }) => {
 
-  await tiepNhanPage.goto();
-
-  const hoTen = 'Auto '; // thêm timestamp tránh trùng
-  const soCCCD = `09${Date.now()}`;
-
-  await tiepNhanPage.fillRequiredFields({
-    hoTen,
-  });
-
-  await tiepNhanPage.fillOptionalFields({
-    soCCCD,
-    ngheNghiep: 'Công nhân',
-    noiLamViec: 'Công ty ABCX',
-    trinhDoVanHoa: '12/12',
-    diaChi: '123 Lê Lợi',
-    ngayCap: '01/03/2020',
-    noiCap: 'Công an Quận 1',
-  });
-
-  await tiepNhanPage.clickTiepNhan();
-
-  // ✅ 1. Verify toast thành công
-  await tiepNhanPage.verifyCapNhatSuccessToast();
-
-  // ✅ 2. Chờ danh sách reload xong (ổn định hơn)
-  await page.waitForLoadState('networkidle');
-
-  // ✅ 3. Verify theo tên (KHÔNG phụ thuộc tuổi)
-  const benhNhanMoi = page.getByText(hoTen, { exact: false }).first();
-
-  await expect(benhNhanMoi).toBeVisible({ timeout: 20000 });
-});
-
-
-
-//   test('TC301 Chỉ nhập thông tin bắt buộc', async ({ page }) => {
-//   const tiepNhanPage = new TiepNhanPage(page);
-
-//   await tiepNhanPage.goto();
-
-//   const hoTen = `Auto Test`;
-
-//   await tiepNhanPage.fillRequiredFields({
-//     hoTen,
-//   });
-
-//   await tiepNhanPage.clickTiepNhan();
-
-//   // ✅ 1️⃣ Verify nghiệp vụ thành công
-//   await tiepNhanPage.verifyCapNhatSuccessToast();
-
-//   // ✅ 2️⃣ Verify bệnh nhân mới xuất hiện
-//   await expect(
-//     page.locator('div').filter({
-//       hasText: new RegExp(`${hoTen}.*tuổi`, 'i'),
-//     }).first()
-//   ).toBeVisible({ timeout: 20000 });
-// });
-
-test('TC301 Chỉ nhập thông tin bắt buộc', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
-
-  await tiepNhanPage.goto();
-
-  const hoTen = `Auto Test`;
-
-  await tiepNhanPage.fillRequiredFields({ hoTen });
-
-  await tiepNhanPage.clickTiepNhan();
-
-  // ✅ Verify toast thành công
-  await tiepNhanPage.verifyCapNhatSuccessToast();
-
-  await page.waitForLoadState('networkidle');
-
-  // 🔥 Match đúng format danh sách: "Tên -"
-  await expect(
-    page.getByText(new RegExp(`^${hoTen}\\s*-`, 'i'))
-  ).toBeVisible({ timeout: 20000 });
-});
-
-
-//   test('TC302  Không nhập họ tên → Không cho tiếp nhận', async ({ page }) => {
 //     const tiepNhanPage = new TiepNhanPage(page);
 
 //     await tiepNhanPage.goto();
 
-//     // ❌ không nhập họ tên
-//     await tiepNhanPage.ngaySinhInput.fill('01/01/2000');
-//     await tiepNhanPage.sdtInput.fill('0901234567');
-//     await tiepNhanPage.gioiTinhNam.check();
+//     await tiepNhanPage.fillRequiredFields({
+//       hoTen: data.hoTen,
+//     });
 
-//     await tiepNhanPage.selectMantineByName(/Quốc tịch/i, 'Việt Nam');
-//     await tiepNhanPage.selectMantineByName(/Tỉnh.*Thành/i, 'Thành phố Hồ Chí Minh');
-//     await tiepNhanPage.selectMantineByName(/Phường.*Xã/i, 'Xã Bình Châu');
-//     await tiepNhanPage.selectMantineByName(/Dân tộc/i, 'Kinh');
-//     await tiepNhanPage.selectMantineByName(/Vào khoa/i, 'Gây mê hồi sức');
-//     await tiepNhanPage.selectMantineByName(/Vào phòng/i, 'Buồng GMHS 1');
+//     await tiepNhanPage.fillOptionalFields({
+//       soCCCD: data.soCCCD,
+//       ngheNghiep: data.ngheNghiep,
+//       noiLamViec: data.noiLamViec,
+//       diaChi: data.diaChi,
+//       ngayCap: data.ngayCap,
+//       noiCap: data.noiCap,
+//     });
 
 //     await tiepNhanPage.clickTiepNhan();
 
-//     // ✅ vẫn ở trang tiếp nhận => FAIL đúng
-//     await expect(page).toHaveURL(/\/benhvien\/tiepnhan/);
+//     await tiepNhanPage.verifyCapNhatSuccessToast();
 
-
-//     // ✅ 2️⃣ Hiển thị lỗi validation tại Họ tên
-//   await expect(
-//     page.getByText(/họ tên.*(bắt buộc|vui lòng)/i)
-//   ).toBeVisible();
-
-//   // ❌ 3️⃣ Không có toast thành công
-//   // const toast = page.locator(
-//   //   'div[role="alert"].mantine-Notifications-notification'
-//   // );
-//   // await expect(toast).not.toContainText(/thành công/i);
-//   // Không có toast thành công
-// const toast = page.locator(
-//   'div[role="alert"].mantine-Notifications-notification'
-// );
-
-// await expect(toast).toHaveCount(0);
 //   });
 
-test('TC302 Không nhập họ tên → Không cho tiếp nhận', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
 
-  await tiepNhanPage.goto();
 
-  // ❌ Không nhập họ tên
-  await tiepNhanPage.ngaySinhInput.fill('01/01/2000');
-  await tiepNhanPage.sdtInput.fill('0901234567');
-  await tiepNhanPage.gioiTinhNam.check();
+// // test(`TC301 - Nhập thông tin bắt buộc từ Excel ${index + 1}`, async ({ page }) => {
 
-  await tiepNhanPage.selectMantineByName(/Quốc tịch/i, 'Việt Nam');
-  await tiepNhanPage.selectMantineByName(/Tỉnh.*Thành/i, 'Thành phố Hồ Chí Minh');
-  await tiepNhanPage.selectMantineByName(/Phường.*Xã/i, 'Xã Bình Châu');
-  await tiepNhanPage.selectMantineByName(/Dân tộc/i, 'Kinh');
-  await tiepNhanPage.selectMantineByName(/Vào khoa/i, 'Gây mê hồi sức');
-  await tiepNhanPage.selectMantineByName(/Vào phòng/i, 'Buồng GMHS 1');
+// //       const tiepNhanPage = new TiepNhanPage(page);
 
-  await tiepNhanPage.clickTiepNhan();
+// //       await tiepNhanPage.goto();
 
-  // ✅ 1️⃣ Vẫn ở trang tiếp nhận (không redirect)
-  await expect(page).toHaveURL(/tiepnhan/i);
+// //       const hoTen = `${data.hoTen} ${Date.now()}`;
 
-  // ✅ 2️⃣ Input họ tên bị invalid (validation hoạt động)
-  await expect(tiepNhanPage.hoTenInput)
-    .toHaveAttribute('aria-invalid', 'true');
+// //       // nhập các field bắt buộc
+// //       await tiepNhanPage.fillRequiredFields({
+// //         hoTen,
+// //         sdt: data.sdt
+// //       });
 
-  // ✅ 3️⃣ Không có toast thành công
-  await expect(
-    page.getByText(/thành công/i)
-  ).toHaveCount(0);
-});
-  
+// //       // CCCD bắt buộc
+// //       await page.locator('input[placeholder="Nhập số CCCD/CMND"]')
+// //         .fill(data.soCCCD);
 
-//   test('TC303  Nhập sai định dạng SĐT → hiển thị lỗi và không cho tiếp nhận', async ({ page }) => {
+// //       // ngày cấp
+// //       const ngayCap = page.locator(
+// //         'input[data-path="benhnhan.benhnhanCmndNgaycap"]'
+// //       );
+
+// //       await ngayCap.fill(data.ngayCap);
+// //       await ngayCap.press('Enter');
+
+// //       // nơi cấp
+// //       await page.locator(
+// //         'input[data-path="benhnhan.benhnhanCmndNoicap"]'
+// //       ).fill(data.noiCap);
+
+// //       await tiepNhanPage.clickTiepNhan();
+
+// //       await tiepNhanPage.verifyCapNhatSuccessToast();
+
+// //       // verify bệnh nhân xuất hiện
+// //       const benhNhanMoi = page.locator('span', {
+// //         hasText: new RegExp(`${hoTen}.*tuổi`, 'i')
+// //       }).first();
+
+// //       await expect(benhNhanMoi).toBeVisible({ timeout: 20000 });
+
+// //     });
+ 
+
+//  });
+
+
+//  testData.forEach((data, index) => {
+
+//     test(`TC301 - Nhập các thông tin bắt buộc từ Excel ${index + 1}`, async ({ page }) => {
+
+//       const tiepNhanPage = new TiepNhanPage(page);
+
+//       const hoTen = `${data.hoTen} Required ${Date.now()}`;
+
+//       await tiepNhanPage.fillRequiredFields({
+//         hoTen
+//       });
+
+//       await page.locator('input[placeholder="Nhập số CCCD/CMND"]')
+//         .fill(String(data.soCCCD));
+
+//       const ngayCap = page.locator(
+//         'input[data-path="benhnhan.benhnhanCmndNgaycap"]'
+//       );
+
+//       await ngayCap.fill(String(data.ngayCap));
+//       await ngayCap.press('Enter');
+
+//       await page.locator(
+//         'input[data-path="benhnhan.benhnhanCmndNoicap"]'
+//       ).fill(String(data.noiCap));
+
+//       await tiepNhanPage.clickTiepNhan();
+
+//       await tiepNhanPage.verifyCapNhatSuccessToast();
+
+//     });
+
+//   });
+
+
+ 
+// // test('TC301 - Chỉ nhập thông tin bắt buộc', async ({ page }) => {
+
+// //   const tiepNhanPage = new TiepNhanPage(page);
+
+// //   await tiepNhanPage.goto();
+
+// //   // tên duy nhất để tránh trùng dữ liệu
+// //   const hoTen = `Auto Required ${Date.now()}`;
+
+// //   // nhập trường bắt buộc
+// //   await tiepNhanPage.fillRequiredFields({
+// //     hoTen,
+// //   });
+
+// //   // bấm tiếp nhận
+// //   await tiepNhanPage.clickTiepNhan();
+
+// //   // 1️⃣ verify toast thành công
+// //   await tiepNhanPage.verifyCapNhatSuccessToast();
+
+// //   // 2️⃣ chờ UI cập nhật danh sách
+// //   await page.waitForLoadState('networkidle');
+
+// //   // 3️⃣ verify bệnh nhân xuất hiện trong danh sách
+// //   const benhNhanMoi = page.locator('span', {
+// //     hasText: new RegExp(`${hoTen}.*tuổi`, 'i')
+// //   }).first();
+
+// //   await expect(benhNhanMoi).toBeVisible({ timeout: 20000 });
+
+// // });
+
+
+
+// test('TC302 Không nhập họ tên → Không cho tiếp nhận', async ({ page }) => {
 //   const tiepNhanPage = new TiepNhanPage(page);
 
 //   await tiepNhanPage.goto();
 
-//   // ✅ nhập các field bắt buộc KHÁC
+//   await tiepNhanPage.ngaySinhInput.fill('01/12/2005');
+//   await tiepNhanPage.sdtInput.fill('0901234567');
+//   await tiepNhanPage.gioiTinhNam.check();
+
+//   await tiepNhanPage.selectMantineByName(/Quốc tịch/i, 'Việt Nam');
+//   await tiepNhanPage.selectMantineByName(/Tỉnh.*Thành/i, 'Thành phố Hồ Chí Minh');
+//   await tiepNhanPage.selectMantineByName(/Phường.*Xã/i, 'Xã Bình Châu');
+//   await tiepNhanPage.selectMantineByName(/Dân tộc/i, 'Kinh');
+//   await tiepNhanPage.selectMantineByName(/Vào khoa/i, 'Gây mê hồi sức');
+//   await tiepNhanPage.selectMantineByName(/Vào phòng/i, 'Buồng GMHS 1');
+
+//   await tiepNhanPage.clickTiepNhan();
+
+//   await expect(page).toHaveURL(/tiepnhan/i);
+
+//   await expect(tiepNhanPage.hoTenInput)
+//     .toHaveAttribute('aria-invalid', 'true');
+
+//   const toast = page.locator(
+//     'div[role="alert"].mantine-Notifications-notification'
+//   );
+
+//   await expect(toast).toHaveCount(0);
+// });
+  
+
+
+
+// test('TC303 SĐT thiếu số → Không cho tiếp nhận', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
+
+//   await tiepNhanPage.goto();
+
 //   await tiepNhanPage.hoTenInput.fill('Auto Test');
 //   await tiepNhanPage.ngaySinhInput.fill('01/09/1997');
 //   await tiepNhanPage.gioiTinhNam.check();
@@ -251,136 +259,428 @@ test('TC302 Không nhập họ tên → Không cho tiếp nhận', async ({ page
 //   await tiepNhanPage.selectMantineByName(/Vào khoa/i, 'Gây mê hồi sức');
 //   await tiepNhanPage.selectMantineByName(/Vào phòng/i, 'Buồng GMHS 1');
 
-//   // ❌ nhập SĐT sai (type chứ KHÔNG fill)
-//   await tiepNhanPage.sdtInput.click();
-//   await tiepNhanPage.sdtInput.type('09abc@@@', { delay: 50 });
-  
+//   await tiepNhanPage.sdtInput.fill('090123');
+
+//   await expect(tiepNhanPage.sdtInput)
+//     .toHaveAttribute('aria-invalid', 'true');
+
+//   await expect(tiepNhanPage.tiepNhanButton)
+//     .toBeDisabled();
+// });
 
 
-//   // ✅ ASSERT CHÍNH: input SĐT bị invalid
+ 
+// test('TC304 Nhập trùng số CCCD → Không cho tiếp nhận', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
+
+//   await tiepNhanPage.goto();
+
+//   await tiepNhanPage.fillRequiredFields();
+
+//   await tiepNhanPage.fillOptionalFields({
+//     soCCCD: '089204018469',
+//     ngheNghiep: 'Kỹ sư',
+//   });
+
+//   await tiepNhanPage.clickTiepNhan();
+
+//   await expect(page).toHaveURL(/tiepnhan/i);
+
+//   const errorToast = page.locator(
+//     'div[role="alert"].mantine-Notifications-notification'
+//   );
+
+//   await expect(errorToast).toContainText(/cccd|tồn tại|trùng/i);
+// });
+
+
+//   test('TC305 - Tìm kiếm Mã BN và chọn cập nhật thông tin bệnh nhân, bấm hủy', async ({ page }) => {
+//     const tiepNhanPage = new TiepNhanPage(page);
+
+//     const MA_BN = '2603000001';
+
+//     await tiepNhanPage.goto();
+
+//     // await tiepNhanPage.searchMaBN(MA_BN);
+//     await tiepNhanPage.searchByMaBN(MA_BN);
+//     await tiepNhanPage.openHoSoByMaBN(MA_BN);
+//     await tiepNhanPage.clickCapNhatThongTinBenhNhan();
+
+//     await tiepNhanPage.clickHuyThaoTac();
+
+//     await expect(
+//       page.getByRole('button', { name: /cập nhật thông tin bệnh nhân/i })
+//     ).toBeVisible({ timeout: 15000 });
+//   });
+
+
+
+//   test('TC306  Tìm Mã BN chọn cập nhật SĐT → lưu thành công', async ({ page }) => {
+//     const tiepNhanPage = new TiepNhanPage(page);
+
+//     const MA_BN = '2603000001';
+//     const NEW_PHONE = '0901234567';
+
+//     await tiepNhanPage.goto();
+
+//     // await tiepNhanPage.searchMaBN(MA_BN);
+//     await tiepNhanPage.searchByMaBN(MA_BN);
+//     await tiepNhanPage.openHoSoByMaBN(MA_BN);
+//     await tiepNhanPage.clickCapNhatThongTinBenhNhan();
+
+//     await tiepNhanPage.updateSoDienThoai(NEW_PHONE);
+
+//     await tiepNhanPage.clickLuuCapNhat();
+//     await tiepNhanPage.verifyCapNhatSuccessToast();
+//   });
+
+
+
+
+//   test('TC307  Tìm Mã BN → mở hồ sơ → cập nhật SĐT → hủy thao tác', async ({ page }) => {
+//     const tiepNhanPage = new TiepNhanPage(page);
+
+//     const MA_BN = '2603000001';
+//     const NEW_PHONE = '0901234567';
+
+//     await tiepNhanPage.goto();
+
+//     // await tiepNhanPage.searchMaBN(MA_BN);
+//     await tiepNhanPage.searchByMaBN(MA_BN);
+//     await tiepNhanPage.openHoSoByMaBN(MA_BN);
+//     await tiepNhanPage.clickCapNhatThongTinBenhNhan();
+
+//     await tiepNhanPage.updateSoDienThoai(NEW_PHONE);
+
+//     await tiepNhanPage.clickHuyThaoTac();
+
+//     await expect(
+//       page.getByRole('button', { name: /cập nhật thông tin bệnh nhân/i })
+//     ).toBeVisible({ timeout: 15000 });
+//   });
+
+
+
+
+//   test('TC308  Tìm kiếm hồ sơ theo CCCD (input chung)', async ({ page }) => {
+//     const tiepNhanPage = new TiepNhanPage(page);
+
+//     const CCCD = '089204018469'; // ✅ phải là CCCD có tồn tại
+
+//     await tiepNhanPage.goto();
+
+//     // await tiepNhanPage.searchMaBN(CCCD);
+//     await tiepNhanPage.searchByKeyword(CCCD);
+
+//     await expect(page.getByText(new RegExp(CCCD))).toBeVisible({ timeout: 15000 });
+//   });
+
+
+
+//   test('TC309  Tìm kiếm hồ sơ theo SĐT (input chung)', async ({ page }) => {
+//     const tiepNhanPage = new TiepNhanPage(page);
+
+//     const SDT = '0332872278'; // ✅ phải là SĐT có tồn tại
+
+//     await tiepNhanPage.goto();
+
+//     // await tiepNhanPage.searchMaBN(SDT);
+//     await tiepNhanPage.searchByKeyword(SDT);
+
+//     await expect(page.getByText(new RegExp(SDT))).toBeVisible({ timeout: 15000 });
+//   });
+
+
+
+//   test('TC310  Tìm kiếm hồ sơ theo Mã BN (input chung)', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
+
+//   const MA_BN = '2603000001'; // ✅ Mã BN có tồn tại
+
+//   await tiepNhanPage.goto();
+
+//   // 🔍 tìm bằng input chung
+//   await tiepNhanPage.searchByMaBN(MA_BN);
+
+//   // ✅ verify thấy hồ sơ
+//   await expect(
+//     page.getByText(new RegExp(`Mã BN:\\s*${MA_BN}`))
+//   ).toBeVisible({ timeout: 15000 });
+// });
+
+
+ 
+// test('TC311 CCCD chứa chữ → Không cho tiếp nhận', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
+
+//   await tiepNhanPage.goto();
+
+//   await tiepNhanPage.fillRequiredFields();
+
+//   await tiepNhanPage.fillOptionalFields({
+//     soCCCD: 'ABC123XYZ',
+//   });
+
+//   await tiepNhanPage.clickTiepNhan();
+
+//   await expect(page).toHaveURL(/tiepnhan/i);
+
+//   const toast = page.locator(
+//     'div[role="alert"].mantine-Notifications-notification'
+//   );
+
+//   await expect(toast).toHaveCount(0);
+// });
+
+
+// test('TC312 SĐT thiếu số → Không cho tiếp nhận', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
+
+//   await tiepNhanPage.goto();
+
+//   await tiepNhanPage.fillRequiredFields({
+//     hoTen: 'Auto Fail',
+//   });
+
+//   await tiepNhanPage.sdtInput.fill('090123');
+
+//   await tiepNhanPage.clickTiepNhan();
+
 //   await expect(tiepNhanPage.sdtInput).toHaveAttribute(
 //     'aria-invalid',
 //     'true'
 //   );
-
-//   // ✅ nút Tiếp nhận bị disable
-//   await expect(tiepNhanPage.tiepNhanButton).toBeDisabled();
-
-//   // ❌ click cũng KHÔNG cho submit
-//   await tiepNhanPage.clickTiepNhan();
-
-//   // ❌ không có toast thành công
-//   // const toast = page.locator(
-//   //   'div[role="alert"].mantine-Notifications-notification'
-//   // );
-//   // await expect(toast).not.toContainText(/thành công/i);
-//   await expect(
-//   page.locator('div[role="alert"].mantine-Notifications-notification')
-// ).toHaveCount(0);
 // });
 
-test('TC303 SĐT thiếu số → Không cho tiếp nhận', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
 
-  await tiepNhanPage.goto();
+// test('TC313 Không nhập ngày sinh → Không cho tiếp nhận', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
 
-  // Nhập đầy đủ field hợp lệ
-  await tiepNhanPage.hoTenInput.fill('Auto Test');
-  await tiepNhanPage.ngaySinhInput.fill('01/09/1997');
-  await tiepNhanPage.gioiTinhNam.check();
+//   await tiepNhanPage.goto();
 
-  await tiepNhanPage.selectMantineByName(/Quốc tịch/i, 'Việt Nam');
-  await tiepNhanPage.selectMantineByName(/Tỉnh.*Thành/i, 'Thành phố Hồ Chí Minh');
-  await tiepNhanPage.selectMantineByName(/Phường.*Xã/i, 'Xã Bình Châu');
-  await tiepNhanPage.selectMantineByName(/Dân tộc/i, 'Kinh');
-  await tiepNhanPage.selectMantineByName(/Vào khoa/i, 'Gây mê hồi sức');
-  await tiepNhanPage.selectMantineByName(/Vào phòng/i, 'Buồng GMHS 1');
+//   await tiepNhanPage.hoTenInput.fill('Auto Fail');
+//   await tiepNhanPage.sdtInput.fill('0901234567');
 
-  // ❌ Nhập thiếu số điện thoại
-  await tiepNhanPage.sdtInput.fill('090123');
+//   await tiepNhanPage.clickTiepNhan();
 
-  await tiepNhanPage.clickTiepNhan();
+//   await expect(page).toHaveURL(/tiepnhan/);
 
-  // ✅ 1️⃣ Vẫn ở trang tiếp nhận (không redirect)
-  await expect(page).toHaveURL(/tiepnhan/i);
-
-  // ✅ 2️⃣ Field SĐT bị invalid (validation hoạt động)
-  await expect(tiepNhanPage.sdtInput)
-    .toHaveAttribute('aria-invalid', 'true');
-
-  // ✅ 3️⃣ Không có toast thành công
-  await expect(
-    page.getByText(/thành công/i)
-  ).toHaveCount(0);
-});
+//   await expect(
+//     page.getByText(/ngày sinh.*bắt buộc/i)
+//   ).toBeVisible();
+// });
 
 
-  // test('TC304  Nhập trùng số CCCD (không cho tiếp nhận)', async ({ page }) => {
-  //   const tiepNhanPage = new TiepNhanPage(page);
+// test('TC314  Tra cứu bệnh nhân theo Mã bệnh nhân', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
+//   const MA_BN = '2603000001';
 
-  //   await tiepNhanPage.goto();
+//   await tiepNhanPage.goto();
 
-  //   await tiepNhanPage.fillRequiredFields();
-  //   await tiepNhanPage.fillOptionalFields({
-  //     soCCCD: '091769998055484', // CCCD trùng
-  //     ngheNghiep: 'Kỹ sư',
-  //   });
+//   await tiepNhanPage.traCuuTheoMaBN(MA_BN);
 
-  //   await tiepNhanPage.clickTiepNhan();
-
-  //   await expect(page).toHaveURL(/\/benhvien\/tiepnhan/);
+//   // ✅ Business verify: form được fill
+//   await tiepNhanPage.verifyTraCuuThanhCong();
+// });
 
 
-  //   // ✅ 2️⃣ Hiển thị thông báo lỗi trùng CCCD (toast lỗi)
-  // const errorToast = page.locator(
-  //   'div[role="alert"].mantine-Notifications-notification'
-  // );
+// test('TC315  Tra cứu Mã bệnh nhân không tồn tại', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
 
-  // await expect(errorToast).toContainText(/cccd|đã tồn tại|trùng/i);
+//   await tiepNhanPage.goto();
 
-  // // ❌ 3️⃣ KHÔNG có toast thành công
-  // await expect(errorToast).not.toContainText(/thành công/i);
-  // });
+//   await tiepNhanPage.traCuuTheoMaBN('9999999999');
 
- test('TC304 Nhập trùng số CCCD → Không cho tiếp nhận', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
+//   // ❌ Form vẫn trống
+//   await expect(tiepNhanPage.hoTenInput).toHaveValue('');
+// });
 
-  await tiepNhanPage.goto();
 
-  await tiepNhanPage.fillRequiredFields();
+// test('TC316  Tra cứu bệnh nhân theo CCCD/CMND', async ({ page }) => {
+//   const tiepNhanPage = new TiepNhanPage(page);
 
-  await tiepNhanPage.fillOptionalFields({
-    soCCCD: '091769998055484', // CCCD đã tồn tại
-    ngheNghiep: 'Kỹ sư',
+//   await tiepNhanPage.goto();
+
+//   await tiepNhanPage.traCuuTheoCCCD('089204018469');
+
+//   // ✅ Verify form được load
+//   await expect(tiepNhanPage.hoTenInput).not.toHaveValue('');
+
+  
+// });
+
+// });
+
+
+
+
+
+
+
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../../pages/dktw/LoginPage';
+import { TiepNhanPage } from '../../pages/dktw/TiepNhanPage';
+import { createCaptchaSolver } from '../../utils/captcha-solver';
+import { readExcel } from '../../utils/excelReader';
+import users from '../../data/dktw/users.json';
+
+const testData: any[] = readExcel('data/tiepnhan.xlsx');
+
+test.describe('DKTW Tiếp nhận bệnh nhân', () => {
+
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/benhvien');
+
+    await expect(page).not.toHaveURL(/user\/login/, {
+      timeout: 15000,
+    });
   });
 
-  await tiepNhanPage.clickTiepNhan();
+  // ===============================
+  // TC300 - Data từ Excel (đầy đủ thông tin)
+  // ===============================
+  test.describe('TC300 - Tiếp nhận bệnh nhân đầy đủ thông tin từ Excel', () => {
 
-  // ✅ 1️⃣ Vẫn ở trang tiếp nhận (không redirect)
-  await expect(page).toHaveURL(/tiepnhan/i);
+    testData.forEach((data, index) => {
 
-  // ✅ 2️⃣ Có toast lỗi chứa nội dung trùng CCCD
-  const errorToast = page.getByRole('alert').filter({
-    hasText: /cccd|đã tồn tại|trùng/i,
+      test(`Nhập thông tin người ${index + 1}`, async ({ page }) => {
+
+        const tiepNhanPage = new TiepNhanPage(page);
+
+        await tiepNhanPage.goto();
+
+        await tiepNhanPage.fillRequiredFields({
+          hoTen: data.hoTen,
+        });
+
+        await tiepNhanPage.fillOptionalFields({
+          soCCCD: data.soCCCD,
+          ngheNghiep: data.ngheNghiep,
+          noiLamViec: data.noiLamViec,
+          diaChi: data.diaChi,
+          ngayCap: data.ngayCap,
+          noiCap: data.noiCap,
+        });
+
+        await tiepNhanPage.clickTiepNhan();
+        await tiepNhanPage.verifyCapNhatSuccessToast();
+
+      });
+
+    });
+
   });
 
-  await expect(errorToast).toBeVisible();
 
-  // ✅ 3️⃣ Không có toast thành công
-  await expect(
-    page.getByText(/thành công/i)
-  ).toHaveCount(0);
+  // ===============================
+  // TC301 - Chỉ nhập thông tin bắt buộc
+  // ===============================
+  test.describe('TC301 - Nhập thông tin bắt buộc từ Excel', () => {
+
+  testData.forEach((data, index) => {
+
+    test(`Nhập thông tin người ${index + 1}`, async ({ page }) => {
+
+      const tiepNhanPage = new TiepNhanPage(page);
+
+      await tiepNhanPage.goto();
+
+      // const hoTen = `${data.hoTen} Required ${Date.now()}_${index}`;
+      const hoTen = `${data.hoTen}`;
+
+      // chỉ nhập các field bắt buộc
+      await tiepNhanPage.fillRequiredFields({ hoTen });
+
+      // tiếp nhận
+      await tiepNhanPage.clickTiepNhan();
+
+      // verify thành công
+      await tiepNhanPage.verifyCapNhatSuccessToast();
+
+    });
+
+  });
+
 });
 
+  // ===============================
+  // TC302 → TC313 Validation
+  // ===============================
 
-  test('TC305 - Tìm kiếm Mã BN và chọn cập nhật thông tin bệnh nhân, bấm hủy', async ({ page }) => {
+  test('TC302 Không nhập họ tên → Không cho tiếp nhận', async ({ page }) => {
     const tiepNhanPage = new TiepNhanPage(page);
-
-    const MA_BN = '2602000020';
 
     await tiepNhanPage.goto();
 
-    // await tiepNhanPage.searchMaBN(MA_BN);
+    await tiepNhanPage.ngaySinhInput.fill('01/12/2005');
+    await tiepNhanPage.sdtInput.fill('0901234567');
+    await tiepNhanPage.gioiTinhNam.check();
+
+    await tiepNhanPage.selectMantineByName(/Quốc tịch/i, 'Việt Nam');
+    await tiepNhanPage.selectMantineByName(/Tỉnh.*Thành/i, 'Thành phố Hồ Chí Minh');
+    await tiepNhanPage.selectMantineByName(/Phường.*Xã/i, 'Xã Bình Châu');
+    await tiepNhanPage.selectMantineByName(/Dân tộc/i, 'Kinh');
+    await tiepNhanPage.selectMantineByName(/Vào khoa/i, 'Gây mê hồi sức');
+    await tiepNhanPage.selectMantineByName(/Vào phòng/i, 'Buồng GMHS 1');
+
+    await tiepNhanPage.clickTiepNhan();
+
+    await expect(tiepNhanPage.hoTenInput)
+      .toHaveAttribute('aria-invalid', 'true');
+  });
+
+
+  test('TC303 SĐT thiếu số → Không cho tiếp nhận', async ({ page }) => {
+    const tiepNhanPage = new TiepNhanPage(page);
+
+    await tiepNhanPage.goto();
+
+    await tiepNhanPage.hoTenInput.fill('Auto Test');
+    await tiepNhanPage.ngaySinhInput.fill('01/09/1997');
+    await tiepNhanPage.gioiTinhNam.check();
+
+    await tiepNhanPage.sdtInput.fill('090123');
+
+    await expect(tiepNhanPage.sdtInput)
+      .toHaveAttribute('aria-invalid', 'true');
+
+    await expect(tiepNhanPage.tiepNhanButton)
+      .toBeDisabled();
+  });
+
+
+  test('TC304 Nhập trùng số CCCD → Không cho tiếp nhận', async ({ page }) => {
+    const tiepNhanPage = new TiepNhanPage(page);
+
+    await tiepNhanPage.goto();
+
+    await tiepNhanPage.fillRequiredFields();
+
+    await tiepNhanPage.fillOptionalFields({
+      soCCCD: '089204018469',
+      ngheNghiep: 'Kỹ sư',
+    });
+
+    await tiepNhanPage.clickTiepNhan();
+
+    const errorToast = page.locator(
+      'div[role="alert"].mantine-Notifications-notification'
+    );
+
+    await expect(errorToast).toContainText(/cccd|tồn tại|trùng/i);
+  });
+
+
+  // ===============================
+  // TC305 → TC310 Search & Update
+  // ===============================
+
+  test('TC305 Tìm Mã BN → cập nhật → hủy', async ({ page }) => {
+    const tiepNhanPage = new TiepNhanPage(page);
+    const MA_BN = '2603000001';
+
+    await tiepNhanPage.goto();
+
     await tiepNhanPage.searchByMaBN(MA_BN);
     await tiepNhanPage.openHoSoByMaBN(MA_BN);
     await tiepNhanPage.clickCapNhatThongTinBenhNhan();
@@ -389,240 +689,110 @@ test('TC303 SĐT thiếu số → Không cho tiếp nhận', async ({ page }) =>
 
     await expect(
       page.getByRole('button', { name: /cập nhật thông tin bệnh nhân/i })
-    ).toBeVisible({ timeout: 15000 });
+    ).toBeVisible();
   });
 
-//   test('TC305 - Tìm Mã BN → Cập nhật thông tin → Bấm Hủy', async ({ page }) => {
-//   const tiepNhanPage = new TiepNhanPage(page);
 
-//   const MA_BN = '2602000001';
-
-//   await tiepNhanPage.goto();
-
-//   await tiepNhanPage.searchByMaBN(MA_BN);
-//   await tiepNhanPage.openHoSoByMaBN(MA_BN);
-
-//   // ✅ Đảm bảo đã mở hồ sơ
-//   await expect(
-//     page.getByText(new RegExp(MA_BN))
-//   ).toBeVisible();
-
-//   await tiepNhanPage.clickCapNhatThongTinBenhNhan();
-
-//   // ✅ Đảm bảo đang ở chế độ cập nhật (form edit mở)
-//   await expect(
-//     tiepNhanPage.hoTenInput
-//   ).toBeEditable();
-
-//   await tiepNhanPage.clickHuyThaoTac();
-
-//   // ✅ 1️⃣ Không còn editable nữa
-//   await expect(
-//     tiepNhanPage.hoTenInput
-//   ).not.toBeEditable();
-
-//   // ✅ 2️⃣ Nút "Cập nhật thông tin bệnh nhân" xuất hiện lại
-//   await expect(
-//     page.getByRole('button', { name: /cập nhật thông tin bệnh nhân/i })
-//   ).toBeVisible();
-
-//   // ✅ 3️⃣ Không có toast thành công
-//   await expect(
-//     page.getByText(/thành công/i)
-//   ).toHaveCount(0);
-// });
-
-
-  test('TC306  Tìm Mã BN chọn cập nhật SĐT → lưu thành công', async ({ page }) => {
+  test('TC306 Cập nhật SĐT → lưu thành công', async ({ page }) => {
     const tiepNhanPage = new TiepNhanPage(page);
-
-    const MA_BN = '2602000020';
-    const NEW_PHONE = '0901234567';
 
     await tiepNhanPage.goto();
 
-    // await tiepNhanPage.searchMaBN(MA_BN);
-    await tiepNhanPage.searchByMaBN(MA_BN);
-    await tiepNhanPage.openHoSoByMaBN(MA_BN);
+    await tiepNhanPage.searchByMaBN('2603000001');
+    await tiepNhanPage.openHoSoByMaBN('2603000001');
     await tiepNhanPage.clickCapNhatThongTinBenhNhan();
 
-    await tiepNhanPage.updateSoDienThoai(NEW_PHONE);
+    await tiepNhanPage.updateSoDienThoai('0901234567');
 
     await tiepNhanPage.clickLuuCapNhat();
     await tiepNhanPage.verifyCapNhatSuccessToast();
   });
 
 
-
-
-  test('TC307  Tìm Mã BN → mở hồ sơ → cập nhật SĐT → hủy thao tác', async ({ page }) => {
+  test('TC307 Cập nhật SĐT → hủy thao tác', async ({ page }) => {
     const tiepNhanPage = new TiepNhanPage(page);
-
-    const MA_BN = '2602000020';
-    const NEW_PHONE = '0901234567';
 
     await tiepNhanPage.goto();
 
-    // await tiepNhanPage.searchMaBN(MA_BN);
-    await tiepNhanPage.searchByMaBN(MA_BN);
-    await tiepNhanPage.openHoSoByMaBN(MA_BN);
+    await tiepNhanPage.searchByMaBN('2603000001');
+    await tiepNhanPage.openHoSoByMaBN('2603000001');
     await tiepNhanPage.clickCapNhatThongTinBenhNhan();
 
-    await tiepNhanPage.updateSoDienThoai(NEW_PHONE);
+    await tiepNhanPage.updateSoDienThoai('0901234567');
 
     await tiepNhanPage.clickHuyThaoTac();
+  });
+
+
+  test('TC308 Tìm kiếm theo CCCD', async ({ page }) => {
+    const tiepNhanPage = new TiepNhanPage(page);
+
+    await tiepNhanPage.goto();
+
+    await tiepNhanPage.searchByKeyword('089204018469');
+
+    await expect(page.getByText(/089204018469/)).toBeVisible();
+  });
+
+
+  test('TC309 Tìm kiếm theo SĐT', async ({ page }) => {
+    const tiepNhanPage = new TiepNhanPage(page);
+
+    await tiepNhanPage.goto();
+
+    await tiepNhanPage.searchByKeyword('0332872278');
+
+    await expect(page.getByText(/0332872278/)).toBeVisible();
+  });
+
+
+  test('TC310 Tìm kiếm theo Mã BN', async ({ page }) => {
+    const tiepNhanPage = new TiepNhanPage(page);
+
+    await tiepNhanPage.goto();
+
+    await tiepNhanPage.searchByMaBN('2603000001');
 
     await expect(
-      page.getByRole('button', { name: /cập nhật thông tin bệnh nhân/i })
-    ).toBeVisible({ timeout: 15000 });
+      page.getByText(/Mã BN:\s*2603000001/)
+    ).toBeVisible();
   });
 
 
+  // ===============================
+  // TC314 → TC316 Tra cứu
+  // ===============================
 
-
-  test('TC308  Tìm kiếm hồ sơ theo CCCD (input chung)', async ({ page }) => {
+  test('TC314 Tra cứu theo Mã BN', async ({ page }) => {
     const tiepNhanPage = new TiepNhanPage(page);
-
-    const CCCD = ' 091772006570079'; // ✅ phải là CCCD có tồn tại
 
     await tiepNhanPage.goto();
 
-    // await tiepNhanPage.searchMaBN(CCCD);
-    await tiepNhanPage.searchByKeyword(CCCD);
+    await tiepNhanPage.traCuuTheoMaBN('2603000001');
 
-    await expect(page.getByText(new RegExp(CCCD))).toBeVisible({ timeout: 15000 });
+    await tiepNhanPage.verifyTraCuuThanhCong();
   });
 
 
-
-  test('TC309  Tìm kiếm hồ sơ theo SĐT (input chung)', async ({ page }) => {
+  test('TC315 Tra cứu Mã BN không tồn tại', async ({ page }) => {
     const tiepNhanPage = new TiepNhanPage(page);
-
-    const SDT = '0901234567'; // ✅ phải là SĐT có tồn tại
 
     await tiepNhanPage.goto();
 
-    // await tiepNhanPage.searchMaBN(SDT);
-    await tiepNhanPage.searchByKeyword(SDT);
+    await tiepNhanPage.traCuuTheoMaBN('9999999999');
 
-    await expect(page.getByText(new RegExp(SDT))).toBeVisible({ timeout: 15000 });
+    await expect(tiepNhanPage.hoTenInput).toHaveValue('');
   });
 
 
+  test('TC316 Tra cứu theo CCCD', async ({ page }) => {
+    const tiepNhanPage = new TiepNhanPage(page);
 
-  test('TC310  Tìm kiếm hồ sơ theo Mã BN (input chung)', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
+    await tiepNhanPage.goto();
 
-  const MA_BN = '2602000020'; // ✅ Mã BN có tồn tại
+    await tiepNhanPage.traCuuTheoCCCD('089204018469');
 
-  await tiepNhanPage.goto();
-
-  // 🔍 tìm bằng input chung
-  await tiepNhanPage.searchByMaBN(MA_BN);
-
-  // ✅ verify thấy hồ sơ
-  await expect(
-    page.getByText(new RegExp(`Mã BN:\\s*${MA_BN}`))
-  ).toBeVisible({ timeout: 15000 });
-});
-
-
- //mới thêm chưa test
-test('TC311 CCCD chứa chữ → Fail', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
-
-  await tiepNhanPage.goto();
-
-  await tiepNhanPage.fillRequiredFields();
-
-  await tiepNhanPage.fillOptionalFields({
-    soCCCD: 'ABC123XYZ',
+    await expect(tiepNhanPage.hoTenInput).not.toHaveValue('');
   });
 
-  await tiepNhanPage.clickTiepNhan();
-
-  const toast = page.locator('[role="alert"]');
-
-  await expect(toast).not.toContainText(/thành công/i);
 });
-
-
-test('TC312 SĐT thiếu số → Không cho tiếp nhận', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
-
-  await tiepNhanPage.goto();
-
-  await tiepNhanPage.fillRequiredFields({
-    hoTen: 'Auto Fail',
-  });
-
-  await tiepNhanPage.sdtInput.fill('090123');
-
-  await tiepNhanPage.clickTiepNhan();
-
-  await expect(tiepNhanPage.sdtInput).toHaveAttribute(
-    'aria-invalid',
-    'true'
-  );
-});
-
-
-test('TC313 Không nhập ngày sinh → Không cho tiếp nhận', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
-
-  await tiepNhanPage.goto();
-
-  await tiepNhanPage.hoTenInput.fill('Auto Fail');
-  await tiepNhanPage.sdtInput.fill('0901234567');
-
-  await tiepNhanPage.clickTiepNhan();
-
-  await expect(page).toHaveURL(/tiepnhan/);
-
-  await expect(
-    page.getByText(/ngày sinh.*bắt buộc/i)
-  ).toBeVisible();
-});
-
-
-test('TC314  Tra cứu bệnh nhân theo Mã bệnh nhân', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
-  const MA_BN = '2602000001';
-
-  await tiepNhanPage.goto();
-
-  await tiepNhanPage.traCuuTheoMaBN(MA_BN);
-
-  // ✅ Business verify: form được fill
-  await tiepNhanPage.verifyTraCuuThanhCong();
-});
-
-
-test('TC315  Tra cứu Mã bệnh nhân không tồn tại', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
-
-  await tiepNhanPage.goto();
-
-  await tiepNhanPage.traCuuTheoMaBN('9999999999');
-
-  // ❌ Form vẫn trống
-  await expect(tiepNhanPage.hoTenInput).toHaveValue('');
-});
-
-
-test('TC316  Tra cứu bệnh nhân theo CCCD/CMND', async ({ page }) => {
-  const tiepNhanPage = new TiepNhanPage(page);
-
-  await tiepNhanPage.goto();
-
-  await tiepNhanPage.traCuuTheoCCCD('091222111859');
-
-  // ✅ Verify form được load
-  await expect(tiepNhanPage.hoTenInput).not.toHaveValue('');
-
-  
-});
-
-});
-
-

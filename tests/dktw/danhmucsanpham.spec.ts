@@ -34,14 +34,7 @@ test.describe('DKTW - Danh mục sản phẩm', () => {
     await expect(
   page.locator('.mantine-Notification-root')
 ).toContainText(/thành công/i);
-//     await sp.waitOverlayGone();
-//     await sp.search(data.ten);
 
-//     // await expect(sp.tableRows.first()).toContainText(data.ten);
-//     const row = sp.tableRows.first();
-
-//   await expect(row).toBeVisible();
-//   await expect(row).toContainText(data.ten);
   });
 
   // ================= TC802 =================
@@ -135,7 +128,7 @@ test('TC802 - Tìm kiếm theo tên sản phẩm', async ({ page }) => {
     const sp = new DanhMucSanPhamPage(page);
     await sp.goto();
 
-    const TEN = 'Probio';
+    const TEN = 'SP Test';
 
     await sp.deleteByTen(TEN);
 
@@ -148,20 +141,7 @@ test('TC802 - Tìm kiếm theo tên sản phẩm', async ({ page }) => {
 
   // ================= TC807 =================
 
-  // test('TC807 - Không nhập tên sản phẩm', async ({ page }) => {
-  //   const sp = new DanhMucSanPhamPage(page);
-  //   await sp.goto();
-
-  //   await sp.addButton.click();
-
-  //   await sp.modal.waitFor({ state: 'visible' });
-
-  //   await sp.maInput.fill('TEST01');
-
-  //   await sp.submitButton.click();
-
-  //   await expect(sp.tenInput).toHaveAttribute('aria-invalid', 'true');
-  // });
+  
   test('TC807 - Không nhập tên sản phẩm', async ({ page }) => {
 
   const sp = new DanhMucSanPhamPage(page);
@@ -223,7 +203,7 @@ test('TC802 - Tìm kiếm theo tên sản phẩm', async ({ page }) => {
     const sp = new DanhMucSanPhamPage(page);
     await sp.goto();
 
-    await sp.search('Không tồn tại 123456');
+    await sp.search('Tìm kiếm không 0000');
 
     await expect(
       page.getByText(/không tìm thấy kết quả/i)

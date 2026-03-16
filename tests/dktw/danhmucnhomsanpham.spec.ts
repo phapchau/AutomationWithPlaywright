@@ -15,8 +15,8 @@ test('TC701 - Thêm nhóm sản phẩm mới thành công ', async ({ page }) =>
     const nhom = new NhomSanPhamPage(page);
     await nhom.goto();
 
-    const MA = 'NSP5';
-    const TEN = 'Nhóm thuốc giảm đau số 3';
+    const MA = 'NSP8';
+    const TEN = 'Nhóm thuốc giảm đau số 4';
     const LOAI = 'Thuốc viên'; // phải đúng option trong combobox
 
     await nhom.create(MA, TEN, LOAI);
@@ -30,7 +30,7 @@ test('TC702 - Sửa nhóm sản phẩm thành công', async ({ page }) => {
   const nhom = new NhomSanPhamPage(page);
   await nhom.goto();
 
-  const MA = 'SK';
+  const MA = 'NSP5';
   const TEN_MOI = 'Thuốc giảm ho thế hệ mới 1';
 
   // Đợi table load
@@ -73,7 +73,7 @@ test('TC703 - Xóa nhóm sản phẩm thành công', async ({ page }) => {
   const nhom = new NhomSanPhamPage(page);
   await nhom.goto();
 
-  const MA = 'NSP4'; // phải tồn tại trước khi test
+  const MA = 'NSP6'; // phải tồn tại trước khi test
 
   // Đợi table render
   await expect(nhom.table).toBeVisible();

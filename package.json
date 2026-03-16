@@ -25,5 +25,8 @@
     "allure-commandline": "^2.30.0",
     "allure-playwright": "^2.15.1",
     "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
   }
 }
