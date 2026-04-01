@@ -14,28 +14,7 @@ import users from '../../data/dktw/users.json';
 
 test.describe('DKTW  Danh sách bệnh nhân hẹn tái khám', () => {
 
-  // =========================
-  // ✅ LOGIN CHUNG – chạy trước MỖI TEST
-  // =========================
-//   test.beforeEach(async ({ page }) => {
-//   const loginPage = new LoginPage(page);
-//   const captchaSolver = createCaptchaSolver('bypass', { fixedValue: '1' });
-//   const adminUser = users.validUsers[0];
 
-//   await loginPage.login(
-//     adminUser.username,
-//     adminUser.password,
-//     captchaSolver
-//   );
-
-//   // ✅ Chỉ cần đảm bảo không quay lại login
-//   await expect(page).not.toHaveURL(/user\/login/, {
-//     timeout: 20000,
-//   });
-
-//   // ✅ (OPTIONAL) chờ app shell nếu có
-//   await page.waitForTimeout(500); // SPA settle
-// });///bản 28/01
 
 test.beforeEach(async ({ page }) => {
   // 👉 vào thẳng trang sau login

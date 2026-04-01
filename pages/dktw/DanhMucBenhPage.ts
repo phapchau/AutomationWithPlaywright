@@ -115,13 +115,18 @@ this.tenBenhEngInput =
 
   async searchByTenBenh(ten: string) {
 
-    await this.tenBenhInput.fill(ten);
+    // await this.tenBenhInput.fill(ten);
+    await this.tenBenhInput.fill('');
+  await this.tenBenhInput.fill(ten);
+    await this.page.keyboard.press('Escape');
+  await this.page.mouse.click(0, 0);
 
     await this.searchButton.click();
 
     await this.waitOverlayGone();
 
   }
+  
 
 
 // async selectOption(select: Locator, value: string) {
@@ -189,9 +194,13 @@ async selectOption(select: Locator, value: string) {
     await this.nhomBenhInput.fill(data.nhom);
     await this.page.getByRole('option', { name: data.nhom }).click();
 
+    await this.page.keyboard.press('Escape');
+    await this.page.waitForTimeout(200);
+
     await this.dienGiaiInput.fill(data.dienGiai);
 
     await this.submitButton.click();
+
 
     await this.waitOverlayGone();
 
@@ -241,5 +250,16 @@ async selectOption(select: Locator, value: string) {
     await this.waitOverlayGone();
 
   }
+
+
+ async verifyErrorMessage(message?: string) {
+  const error = this.page.locator('.ant-message-error');
+
+  await expect(error).toBeVisible();
+
+  if (message) {
+    await expect(error).toContainText(message);
+  }
+}
 
 }

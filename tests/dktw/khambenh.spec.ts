@@ -9,20 +9,7 @@ import { LoginPage } from '../../pages/dktw/LoginPage';
 import { KhamBenhPage } from '../../pages/dktw/KhamBenhPage';
 import users from '../../data/dktw/users.json';
 
-// test.describe('DKTW - Khám bệnh', () => {
-//   test.beforeEach(async ({ page }) => {
-//     const loginPage = new LoginPage(page);
-//     const adminUser = users.validUsers[0];
 
-//     await loginPage.login(adminUser.username, adminUser.password);
-
-//     // ✅ chờ login ổn định
-//     await page.waitForURL((url) => !url.href.includes('/user/login'), {
-//       timeout: 20000,
-//     });
-
-//     // await expect(page).not.toHaveURL(/user\/login/, { timeout: 20000 });
-//   });
 
 test.describe('DKTW - Khám bệnh', () => {
   test.beforeEach(async ({ page }) => {
